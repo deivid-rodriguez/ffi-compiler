@@ -122,9 +122,13 @@ module FFI
         end
         so_flags = shelljoin(so_flags)
 
-        out_dir = "#{@platform.arch}-#{@platform.os}"
-        if @ext_dir != '.'
-          out_dir = File.join(@ext_dir, out_dir)
+        out_dir = ENV["RUBYARCHDIR"]
+
+        unless out_dir
+          out_dir = "#{@platform.arch}-#{@platform.os}"
+          if @ext_dir != '.'
+            out_dir = File.join(@ext_dir, out_dir)
+          end
         end
 
         directory(out_dir)
